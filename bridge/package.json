@@ -1,0 +1,13 @@
+{
+  "name": "nour-read-voice-bridge",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Optional local 24kHz neural voice bridge for Nour Read (personal, non-commercial use)",
+  "scripts": {
+    "start": "node tts_bridge.mjs"
+  },
+  "dependencies": {
+    "@andresaya/edge-tts": "^2.1.4"
+  }
+}

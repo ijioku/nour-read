@@ -1,0 +1,14 @@
+# Dependencies (installed locally by each user)
+node_modules/
+bridge/node_modules/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
+*.log
+*.zip

@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Nour Read — Natural Voice, Tables & Visual Narrator",
+  "short_name": "Nour Read",
+  "version": "1.0.0",
+  "description": "Clutter-free read-aloud extension with Light/Dark mode, smooth hover play buttons, select-to-read, all languages & natural voices, and smart table, graph & picture descriptions.",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:47821/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Nour Read",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": [
+        "content/table-narrator.js",
+        "content/image-describer.js",
+        "content/content-main.js"
+      ],
+      "css": ["content/content-styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-play-pause": {
+      "suggested_key": {
+        "default": "Alt+Shift+R",
+        "mac": "Command+Shift+R"
+      },
+      "description": "Play or pause Nour Read"
+    },
+    "read-selection": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Read currently selected text"
+    }
+  }
+}

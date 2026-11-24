@@ -1,0 +1,18 @@
+/* Minimal host-page styles for active reading highlight only.
+   All Lumina UI components live inside an isolated Shadow DOM so host CSS never leaks. */
+
+.lumina-active-reading-block {
+  outline: 2px solid rgba(6, 182, 212, 0.78) !important;
+  outline-offset: 4px !important;
+  border-radius: 6px !important;
+  background-color: rgba(6, 182, 212, 0.1) !important;
+  transition: background-color 0.25s ease, outline-color 0.25s ease !important;
+}
+
+/* Subtle dashed highlight around the element you are currently hovering over */
+.lumina-hover-target-outline {
+  outline: 1.5px dashed rgba(6, 182, 212, 0.55) !important;
+  outline-offset: 3px !important;
+  border-radius: 6px !important;
+  transition: outline-color 0.16s ease !important;
+}

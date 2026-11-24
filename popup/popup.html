@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nour Read</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="brand">
+        <!-- Open-book + voice reading icon (replaces the old music note) -->
+        <div class="logo" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H11v16H4.5A2.5 2.5 0 0 0 2 21.5z"/>
+            <path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H13v16h6.5a2.5 2.5 0 0 1 2.5 2.5z"/>
+            <path d="M16.5 8.5c1 .8 1 2.2 0 3"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="title">Nour Read</h1>
+          <div class="bridge-status" id="bridgeStatus">
+            <span class="status-dot" id="bridgeDot"></span>
+            <span id="bridgeLabel">Checking 24kHz bridge...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-segment" role="group" aria-label="Theme">
+        <button class="seg-btn" data-theme-val="light" title="Light mode" type="button">☀️</button>
+        <button class="seg-btn" data-theme-val="auto" title="Match system" type="button">Auto</button>
+        <button class="seg-btn" data-theme-val="dark" title="Dark mode" type="button">🌙</button>
+      </div>
+    </header>
+
+    <!-- Primary Quick Actions -->
+    <section class="actions-grid">
+      <button class="btn primary" id="btnReadSelection" type="button">
+        <span>✨</span> Read Selection
+      </button>
+      <button class="btn secondary" id="btnReadPage" type="button">
+        <span>▶</span> Read Page
+      </button>
+      <button class="btn ghost" id="btnToggleDock" type="button" title="Show or hide floating player">
+        🎧 Dock
+      </button>
+      <button class="btn ghost" id="btnStop" type="button" title="Stop reading">
+        ■ Stop
+      </button>
+    </section>
+
+    <!-- Voice & Language Card -->
+    <section class="card">
+      <div class="card-row">
+        <label class="field-label" for="langFilter">Language</label>
+        <select id="langFilter" class="select"></select>
+      </div>
+      <div class="card-row">
+        <label class="field-label" for="voiceSelect">Voice</label>
+        <select id="voiceSelect" class="select"></select>
+      </div>
+      <div class="card-row speed-row">
+        <div class="speed-header">
+          <label class="field-label" for="rateSlider">Reading Speed</label>
+          <span class="speed-badge" id="rateValue">1.0x</span>
+        </div>
+        <input id="rateSlider" type="range" min="0.75" max="2.0" step="0.05" value="1.0" />
+      </div>
+    </section>
+
+    <!-- Smart Experience Toggles -->
+    <section class="card toggles-card">
+      <label class="toggle-item">
+        <div>
+          <div class="toggle-title">Clutter-Free Hover Play Button</div>
+          <div class="toggle-sub">Shows 1 button on hovered paragraph, table, or picture</div>
+        </div>
+        <input type="checkbox" id="toggleHover" checked />
+      </label>
+
+      <!-- Per-site mute toggle so users can pause hover on apps like Google Docs or Figma -->
+      <label class="toggle-item" id="siteMuteRow">
+        <div>
+          <div class="toggle-title">Pause Hover on This Site</div>
+          <div class="toggle-sub" id="siteMuteHost">Mute hover buttons on the current website only</div>
+        </div>
+        <input type="checkbox" id="toggleSiteMute" />
+      </label>
+
+      <label class="toggle-item">
+        <div>
+          <div class="toggle-title">Text Selection Floating Pill</div>
+          <div class="toggle-sub">Highlight any text to read just that part</div>
+        </div>
+        <input type="checkbox" id="toggleSelectionPill" checked />
+      </label>
+
+      <label class="toggle-item">
+        <div>
+          <div class="toggle-title">Smart Tables, Graphs &amp; Pictures</div>
+          <div class="toggle-sub">Structured narration for tables &amp; visual charts</div>
+        </div>
+        <input type="checkbox" id="toggleVisuals" checked />
+      </label>
+
+      <label class="toggle-item">
+        <div>
+          <div class="toggle-title">Skip Links, URLs &amp; Code Blocks</div>
+          <div class="toggle-sub">Ignores link lists, raw URLs, and code snippets</div>
+        </div>
+        <input type="checkbox" id="toggleSkipLinks" checked />
+      </label>
+
+      <label class="toggle-item">
+        <div>
+          <div class="toggle-title">Highlight &amp; Auto-Scroll</div>
+          <div class="toggle-sub">Follow along smoothly as Nour Read speaks</div>
+        </div>
+        <input type="checkbox" id="toggleHighlight" checked />
+      </label>
+    </section>
+
+    <!-- Optional AI Vision Upgrade (BYOK) -->
+    <details class="card ai-card">
+      <summary class="ai-summary">
+        <span>🧠 Optional AI Vision for Pictures &amp; Graphs</span>
+        <span class="ai-badge" id="aiBadge">Local Mode</span>
+      </summary>
+      <div class="ai-body">
+        <p class="ai-note">
+          Tables &amp; SVG charts work offline automatically. Add your own Gemini API key (stored locally on your device only) to unlock deep AI descriptions for any photo or canvas chart.
+        </p>
+        <div class="key-row">
+          <input type="password" id="geminiKeyInput" class="text-input" placeholder="Paste Gemini API key (optional)" autocomplete="off" />
+          <button class="btn primary small" id="btnSaveKey" type="button">Save</button>
+        </div>
+        <div class="key-status" id="keyStatus"></div>
+      </div>
+    </details>
+
+    <footer class="footer">
+      <span>Shortcuts: <code>Alt+Shift+R</code> Play/Pause · <code>Alt+Shift+S</code> Selection</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
